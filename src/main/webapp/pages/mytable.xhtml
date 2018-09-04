@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+<h:head></h:head>
+
+<h:body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    
+    
+    <h:form>
+    <h:panelGrid columns="2" cellpadding="5">
+        <h:outputLabel for="menu" value="Basic:" />
+        <p:selectCheckboxMenu id="menu" value="#{checkboxView.selectedCities}" label="Cities"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+            <f:selectItems value="#{checkboxView.cities}" />
+        </p:selectCheckboxMenu>
+ 
+        <h:outputLabel for="multiple" value="Multiple:" />
+        <p:selectCheckboxMenu id="multiple" value="#{checkboxView.selectedCities2}" label="Cities" multiple="true"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+            <f:selectItems value="#{checkboxView.cities}" />
+        </p:selectCheckboxMenu>
+         
+        <h:outputLabel for="grouped" value="Grouped:" />
+        <p:selectCheckboxMenu id="grouped" value="#{checkboxView.selectedCars}" label="Cars" multiple="true"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+            <f:selectItems value="#{checkboxView.cars}" />
+        </p:selectCheckboxMenu>
+    </h:panelGrid>
+ 
+    <p:commandButton value="Submit" update="displayItems" oncomplete="PF('itemDialog').show()" style="margin-top:10px;" />
+ 
+    <p:dialog header="Selected Items" modal="true" showEffect="fade" hideEffect="fade" widgetVar="itemDialog" width="250">
+        <p:outputPanel id="displayItems">
+            <p:dataList value="#{checkboxView.selectedCities}" var="city" emptyMessage="No cities selected" style="margin-bottom: 10px;">
+                <f:facet name="header">
+                    Basic
+                </f:facet>
+                #{city}
+            </p:dataList>
+ 
+            <p:dataList value="#{checkboxView.selectedCities2}" var="city" emptyMessage="No cities selected">
+                <f:facet name="header">
+                    Multiple
+                </f:facet>
+                #{city}
+            </p:dataList>
+             
+            <p:dataList value="#{checkboxView.selectedCars}" var="car" emptyMessage="No cars selected">
+                <f:facet name="header">
+                    Grouped
+                </f:facet>
+                #{car}
+            </p:dataList>
+        </p:outputPanel>
+    </p:dialog>
+</h:form>
+    
+    
+    
+    <h:form>
+        <p:dataTable  var="employee" value="#{employeeBean.model}"  
+                     paginator="true" rows="10"
+                     paginatorTemplate=
+                             "{RowsPerPageDropdown} {FirstPageLink}
+                             {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15,20" lazy="true">
+                     
+                     
+            <p:column headerText="Sr No." sortBy="#{employee.id}">
+                <h:outputText value="#{employee.id}"/>
+            </p:column>
+
+            <p:column headerText="Name" sortBy="#{employee.name}" filterBy="#{employee.name}">
+                <h:outputText value="#{employee.name}"/>
+            </p:column>
+
+            <p:column headerText="Phone Number" sortBy="#{employee.phoneNumber}" filterBy="#{employee.phoneNumber}">
+                <h:outputText value="#{employee.phoneNumber}"/>
+            </p:column>
+
+            <p:column headerText="Address" sortBy="#{employee.address}" filterBy="#{employee.address}">
+                <h:outputText value="#{employee.address}"/>
+            </p:column>
+            
+             <p:column headerText="Action">
+             
+                <h:commandLink value="" title="Edit Record" action="#{employee.action}"><i class='fa fa-edit' style='font-size:16px;color:green'></i></h:commandLink> &nbsp;
+                <h:commandLink value="" title="Delete Record" action="#{employee.action}"> <i class='fa fa-trash-o' style='font-size:16px;color:red'></i></h:commandLink>
+
+            </p:column>
+            
+        </p:dataTable>
+    </h:form>
+</h:body>
+</html>

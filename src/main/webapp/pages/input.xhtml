@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <!-- <h:outputStylesheet library="css" name="bootstrap.min.css" /> -->
+    <title>JSF Bootstrap Example</title>
+    <style type="text/css">
+        .col-xs-updated {        
+            width: 92% !important;
+        }
+    </style>
+</h:head>
+<h:body>
+<link href="#{request.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+	 <p:growl id="growl" showDetail="true" />  
+
+    <div class="container">
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand">JSF Bootstrap</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-xs-updated">
+                <h:form id="studentForm" styleClass="form-horizontal">
+                    <div class="form-group">
+                        <h:outputLabel value="First Name" for="fname"  styleClass="control-label col-sm-2" />
+                        <div class="col-sm-10">
+                            <h:inputText id="fname" value="#{studentBean.firstName}" styleClass="form-control" required="true"/>
+                            <p:message for="fname" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Last Name" for="lname" styleClass="control-label col-sm-2" />
+                        <div class="col-sm-10">
+                            <h:inputText id="lname" value="#{studentBean.lastName}" styleClass="form-control" required="true"/>
+                            <p:message for="lname" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Standard" for="standard" styleClass="control-label col-sm-2" />
+                        <div class="col-sm-10">
+                            <h:inputText id="standard" value="#{studentBean.standard}" styleClass="form-control" required="true"/>
+                            <p:message for="standard" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <h:commandButton value="Create" action="#{studentBean.createStudentForm}" styleClass="btn btn-default" />
+                        </div>
+                    </div>
+                    
+                    <p:commandButton value="Save" actionListener="#{studentBean.saveMessage}" update="growl" styleClass="btn btn-default"/>  
+                    
+                     
+                    
+                </h:form>
+                
+                              
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>

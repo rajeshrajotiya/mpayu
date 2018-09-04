@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head></h:head>
+
+<h:body>
+
+
+	<h:form>
+		<p:dataTable id="tableStateDT" var="car"
+			value="#{dtTableStateView.cars}" widgetVar="carsTable"
+			multiViewState="true" rows="10" paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15" selectionMode="single"
+			selection="#{dtTableStateView.selectedCar}" rowKey="#{car.id}"
+			emptyMessage="No cars found with given criteria"
+			filteredValue="#{dtTableStateView.filteredCars}">
+
+			<f:facet name="header">
+				<p:outputPanel>
+					<h:outputText value="Search all fields:" />
+					<p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()"
+						style="width:150px" placeholder="Enter keyword" />
+				</p:outputPanel>
+			</f:facet>
+
+			<!--  <p:ajax event="rowSelect" update=":form:carDetail" oncomplete="PF('carDialog').show()" /> -->
+
+			<p:column headerText="Id" filterBy="#{car.id}" sortBy="#{car.id}"
+				filterMatchMode="contains">
+				<h:outputText value="#{car.id}" />
+			</p:column>
+
+			<p:column headerText="Year" filterBy="#{car.year}"
+				sortBy="#{car.year}" filterMatchMode="startsWith">
+				<h:outputText value="#{car.year}" />
+			</p:column>
+
+			<p:column headerText="Brand" filterBy="#{car.brand}"
+				sortBy="#{car.brand}" filterMatchMode="exact">
+				<f:facet name="filter">
+					<p:selectOneMenu onchange="PF('carsTable').filter()"
+						style="width:100px;">
+						<f:selectItem itemLabel="Select One" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{dtTableStateView.brands}" />
+					</p:selectOneMenu>
+				</f:facet>
+				<h:outputText value="#{car.brand}" />
+			</p:column>
+
+			<p:column headerText="Color" filterBy="#{car.color}"
+				sortBy="#{car.color}" filterMatchMode="in">
+				<f:facet name="filter">
+					<p:selectCheckboxMenu label="Colors"
+						onchange="PF('carsTable').filter()" style="width:80px;"
+						panelStyle="width:125px" scrollHeight="150">
+						<f:selectItems value="#{dtTableStateView.colors}" />
+					</p:selectCheckboxMenu>
+				</f:facet>
+				<h:outputText value="#{car.color}" />
+			</p:column>
+		</p:dataTable>
+
+		<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="false">
+			<p:outputPanel id="carDetail" style="text-align:center;">
+				<p:panelGrid columns="2"
+					rendered="#{not empty dtTableStateView.selectedCar}"
+					columnClasses="label,value">
+
+					<h:outputText value="Id:" />
+					<h:outputText value="#{dtTableStateView.selectedCar.id}" />
+
+					<h:outputText value="Year" />
+					<h:outputText value="#{dtTableStateView.selectedCar.year}" />
+
+					<h:outputText value="Brand" />
+					<h:outputText value="#{dtTableStateView.selectedCar.brand}" />
+
+					<h:outputText value="Color:" />
+					<h:outputText value="#{dtTableStateView.selectedCar.color}"
+						style="color:#{dtTableStateView.selectedCar.color}" />
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+
+	<p:dock position="bottom">
+		<p:menuitem value="Calendar" icon="../images/calendar.png" url="#" />
+		<p:menuitem value="Email" icon="../images/email.png" url="#" />
+		<p:menuitem value="History" icon="../images/history.png" url="#" />
+		<p:menuitem value="Home" icon="../images/home.png" url="#" />
+		<p:menuitem value="Link" icon="../images/link.png" url="#" />
+		<p:menuitem value="Music" icon="../images/music.png" url="#" />
+		<p:menuitem value="Portfolio" icon="../images/portfolio.png" url="#" />
+		<p:menuitem value="RSS" icon="../images/rss.png" url="#" />
+		<p:menuitem value="RSS2" icon="../images/rss2.png" url="#" />
+		<p:menuitem value="Stack" icon="../images/stack.png" url="#" />
+		<p:menuitem value="Video" icon="../images/video.png" url="#" />
+
+		<p:menuitem value="Calendar" icon="../images/calendar.png" url="#" />
+		<p:menuitem value="Email" icon="../images/email.png" url="#" />
+		<p:menuitem value="History" icon="../images/history.png" url="#" />
+		<p:menuitem value="Home" icon="../images/home.png" url="#" />
+		<p:menuitem value="Link" icon="../images/link.png" url="#" />
+		<p:menuitem value="Music" icon="../images/music.png" url="#" />
+		<p:menuitem value="Portfolio" icon="../images/portfolio.png" url="#" />
+		<p:menuitem value="RSS" icon="../images/rss.png" url="#" />
+		<p:menuitem value="RSS2" icon="../images/rss2.png" url="#" />
+		<p:menuitem value="Stack" icon="../images/stack.png" url="#" />
+		<p:menuitem value="Video" icon="../images/video.png" url="#" />
+
+
+
+	</p:dock>
+
+</h:body>
+</html>

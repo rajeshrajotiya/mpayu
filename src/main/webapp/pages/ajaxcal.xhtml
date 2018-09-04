@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<script>
+		function monitor(data){
+			console.log("ajax status="+data.status);
+			/* console.log("responseText="+data.responseText);
+			console.log("responseCode="+data.responseCode);
+			console.log("type="+data.type);
+			console.log("source="+data.source); */
+			
+			if(data.status == "begin"){
+				/* loading.style.display = "block"; */
+				$(".coverscreen").show();
+			}else if(data.status == "complete"){
+				/* loading.style.display = "none"; */
+				$(".coverscreen").hide();
+			}else if(data.status == "success"){
+				/* loading.style.display = "none"; */
+				 $(".coverscreen").hide(); 
+				
+				 console.log("after success responseText="+data.responseText);
+				 
+				 var args = data.responseXML.getElementById("output2").childNodes[0].nodeValue;
+				 
+				 console.log("without xml responseText="+ args);
+				 
+				 console.log("get valu by document id="+ document.getElementById("output2").innerHTML);
+				 
+				 /* console.log("responseCode="+data.responseCode);
+				console.log("type="+data.type);
+				console.log("source="+data.source); */
+			}
+		}
+		
+		function onSuccessPrimeAjax(){
+			
+			alert("Successfully Primefaces called...");
+			
+			PF('dlg').show();
+		}
+		
+		
+	</script>
+	
+	<style type="text/css">
+.coverscreen {
+    position: fixed;
+    z-index: 99999;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(51,51,51,0.7);
+    display: none;
+}
+
+.coverscreen1 {
+    position: fixed;
+    z-index: 99999;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: transparent!important;
+    display: none;
+}
+
+.loderimagediv {
+    z-index: 99999;
+    left: 45%;
+    top: 40%;
+    position: fixed;
+}
+
+.ui-dialog{
+
+ top:30%!important;
+
+}
+</style>
+	<!-- <h:outputScript library="javax.faces" name="jsf.js"/> -->
+</h:head>
+<h:body>
+
+<div class="coverscreen">
+   <div class="loderimagediv" id="loadingImg">
+       <img alt="" src="../images/loading.gif" />
+   </div>
+</div>
+
+		<h1>JavaBeat JSF 2.2 Examples</h1>
+		<h2>JSF2 Ajax Monitoring Example</h2>
+		<h:form prependId="false">
+		
+		<p:growl id="growl" showDetail="true" />  
+		
+			<h:inputText id="input" value="#{indexBean.message}"/>
+			#{' '}
+			<h:commandButton value="Ajax Call Using JSF" action="#{indexBean.action}">
+				<f:ajax execute="@this input" render="output2" onevent="monitor"></f:ajax>
+			</h:commandButton>
+			#{' '}
+			
+			
+			<p:commandButton value="Display Text" action="#{indexBean.action}" onsuccess="monitor">
+				<f:ajax execute="@this input" render="" ></f:ajax>
+			</p:commandButton>
+			
+			
+			<h:outputText id="output2" value="#{indexBean.message}"></h:outputText>
+			<!-- <h:graphicImage id="image" value="#{request.contextPath}/images/loading.gif" style="display:none;"></h:graphicImage> -->
+			
+			
+		<p:commandButton value="Submit" icon="ui-icon-check" update="output growl" actionListener="#{indexBean.action}" onstart="PF('loading').show()" oncomplete="monitor(xhr, status, args)"  onsuccess="PF('loading').hide()" />
+
+		<p:dialog header="Values" resizable="false" showEffect="fade" widgetVar="dlg" modal="true">
+			<p:panelGrid id="output" columns="2" columnClasses="label, value">
+				<h:outputText value="Simple:" />
+				<h:outputText value="#{indexBean.message}" />
+
+			</p:panelGrid>
+		</p:dialog>
+		
+		
+		<p:dialog showHeader="true" header="Please wait..." draggable="false" resizable="false" showEffect="fade" widgetVar="loading" modal="true" closable="false" styleClass="coverscreen1">
+			<h:graphicImage id="image" value="../images/loading.gif" ></h:graphicImage>
+		</p:dialog>
+
+		</h:form>
+		
+	
+	
+</h:body>
+</html>
